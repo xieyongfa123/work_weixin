@@ -6,7 +6,7 @@
 
 使用 `composer`
 
-`composer require "stoneworld/wechat"`
+`composer require stoneworld/wechat:dev-master`
 
 手动安装
 下载 本安装包
@@ -36,7 +36,7 @@ $options = array(
             'token'=>'stoneworld1992',   //填写应用接口的Token
             'encodingaeskey'=>'o1wze3492xoUVIc9ccTLJczO3BQ5pLfiHcKwtDEdqM9',//填写加密用的EncodingAESKey
             'appid'=>'wx8ac123b21f53dera7',  //填写高级调用功能的appid
-            'appsecret'=>'4ZDHIETJ6e0oENlEkRhYwXedKcPcRjCkgQkuHtQTJ12ZhWHESowrJqS9', //填写高级调用功能的密钥
+            'appsecret'=>'4ZDHIETJ6e0oENlEkRhYwdKcPcRjCkgQkuHtQTJ12ZhWHESowrJqS9', //填写高级调用功能的密钥
             'agentid'=>'5', //应用的id
         );
 
