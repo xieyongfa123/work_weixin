@@ -11,6 +11,7 @@
             "role": "Developer"
         }
     ],
+    "minimum-stability" : "dev",
     "support": {
         "email": "stoneworld1991@gmail.com"
     },
