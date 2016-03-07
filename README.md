@@ -43,14 +43,14 @@ $options = array(
 $server = new Server($options);
 
 $server->on('message', function($message){
-    return "您好！欢迎关注 overtrue!";
+    return "您好!";
 });
 
 // 您可以直接echo 或者返回给框架
 echo $server->serve();
 ```
 
-更多请参考文档。
+更多请参考文档[wiki](https://github.com/stoneworld/wechat/wiki)。
 
 ### 致谢
 
