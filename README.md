@@ -13,6 +13,7 @@ composer require "stoneworld/wechat"
 
 然后引入根目录的autoload.php即可：
 
+```
 <?php
 
 require "wechat/autoload.php"; // 路径请修改为你具体的实际路径
@@ -20,10 +21,13 @@ require "wechat/autoload.php"; // 路径请修改为你具体的实际路径
 ...
 确认你没装 laravel-debugbar!!!!
 
-使用
+```
+
+### 使用
 
 基本使用（以服务端为例）:
 
+```
 <?php
 
 use Stoneowrld\Wechat\Server;
@@ -44,6 +48,8 @@ $server->on('message', function($message){
 
 // 您可以直接echo 或者返回给框架
 echo $server->serve();
+```
+
 更多请参考文档。
 
 ### 致谢
