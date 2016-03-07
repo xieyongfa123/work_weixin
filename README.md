@@ -7,8 +7,8 @@
 使用 `composer`
 
 `composer require "stoneworld/wechat"`
-手动安装
 
+手动安装
 下载 本安装包
 
 然后引入根目录的autoload.php即可：
@@ -50,7 +50,7 @@ $server->on('message', function($message){
 echo $server->serve();
 ```
 
-更多请参考文档[wiki](https://github.com/stoneworld/wechat/wiki)。
+更多请参考文档[wiki](https://github.com/stoneworld/wechat/wiki/%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2)。
 
 ### 致谢
 
