@@ -18,7 +18,7 @@ class Broadcast
     /**
      * 消息
      *
-     * @var \Overtrue\Wechat\Messages\BaseMessage;
+     * @var \Stoneworld\Wechat\Messages\BaseMessage;
      */
     protected $message;
 
@@ -53,7 +53,7 @@ class Broadcast
     /**
      * 准备消息
      *
-     * @param \Overtrue\Wechat\Messages\BaseMessage $message
+     * @param \Stoneworld\Wechat\Messages\BaseMessage $message
      *
      * @return Broadcast
      */
