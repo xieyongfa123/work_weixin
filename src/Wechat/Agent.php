@@ -7,9 +7,9 @@ namespace Stoneworld\Wechat;
  */
 class Agent
 {
-    const API_GET                 = 'https://qyapi.weixin.qq.com/cgi-bin/agent/get';
-    const API_SET                 = 'https://qyapi.weixin.qq.com/cgi-bin/agent/set';
-	const API_LIST                = 'https://qyapi.weixin.qq.com/cgi-bin/agent/list';
+    const API_GET  = 'https://qyapi.weixin.qq.com/cgi-bin/agent/get';
+    const API_SET  = 'https://qyapi.weixin.qq.com/cgi-bin/agent/set';
+    const API_LIST = 'https://qyapi.weixin.qq.com/cgi-bin/agent/list';
 
     /**
      * Http对象
@@ -31,12 +31,12 @@ class Agent
 
     /**
      * 获取企业号应用
-     * @param  string  $agentid     应用id
+     * @param  string $agentid 应用id
      * @return array
      */
     public function get($agentid)
     {
-        $response = $this->http->get(self::API_GET.'?agentid='.$agentid);
+        $response = $this->http->get(self::API_GET . '?agentid=' . $agentid);
 
         return $response;
     }
@@ -44,7 +44,7 @@ class Agent
     /**
      * 设置企业号应用
      *
-     * @param  array  $agentInfo 应用信息 具体数据参考微信接口	 
+     * @param  array $agentInfo 应用信息 具体数据参考微信接口
      * @return array
      */
     public function set(array $agentInfo)
@@ -58,11 +58,11 @@ class Agent
      * @param void
      * @return array
      */
-    public function list()
+    public function lists()
     {
         $response = $this->http->get(self::API_LIST);
-		
-		return $response['agentlist'];
+
+        return $response['agentlist'];
     }
 
 }
