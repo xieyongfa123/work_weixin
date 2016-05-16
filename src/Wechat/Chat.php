@@ -5,7 +5,7 @@ namespace Stoneworld\Wechat;
 /**
  * 会话
  */
-class Group
+class Chat
 {
     const API_GET         = 'https://qyapi.weixin.qq.com/cgi-bin/chat/get';
     const API_CREATE      = 'https://qyapi.weixin.qq.com/cgi-bin/chat/create';
