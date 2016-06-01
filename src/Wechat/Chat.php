@@ -5,7 +5,7 @@ namespace Stoneworld\Wechat;
 /**
  * 会话
  */
-class Group
+class Chat
 {
     const API_GET         = 'https://qyapi.weixin.qq.com/cgi-bin/chat/get';
     const API_CREATE      = 'https://qyapi.weixin.qq.com/cgi-bin/chat/create';
@@ -44,9 +44,9 @@ class Group
     public function create($chatid, $name, $owner, $userlist)
     {
         $params = array(
-            'chatid' => $chatid,
-            'name' => $name,
-            'owner' => $owner,
+            'chatid'   => $chatid,
+            'name'     => $name,
+            'owner'    => $owner,
             'userlist' => $userlist
         );
 
@@ -78,10 +78,10 @@ class Group
     public function update($chatid, $op_user, $name = null, $owner = null, $add_user_list = array(), $del_user_list = array())
     {
         $params = array(
-            'chatid' => $chatid,
-            'op_user' => $op_user,
-            'name' => $name,
-            'owner' => $owner,
+            'chatid'        => $chatid,
+            'op_user'       => $op_user,
+            'name'          => $name,
+            'owner'         => $owner,
             'add_user_list' => $add_user_list,
             'del_user_list' => $del_user_list
         );
@@ -99,7 +99,7 @@ class Group
     public function quit($chatid, $op_user)
     {
         $params = array(
-            'chatid' => $chatid,
+            'chatid'  => $chatid,
             'op_user' => $op_user
         );
 
@@ -117,7 +117,7 @@ class Group
     {
         $params = array(
             'chatid' => $chatid,
-            'chat' => $chat
+            'chat'   => $chat
         );
 
         return $this->http->jsonPost(self::API_CLEARNOTIFY, $params);
@@ -138,11 +138,11 @@ class Group
         $params = array(
             'receiver' => array(
                 'type' => $type,
-                'id' => $id
+                'id'   => $id
             ),
-            'sender' => $sender,
-            'msgtype' => $msgtype,
-            $msgtype => $content
+            'sender'   => $sender,
+            'msgtype'  => $msgtype,
+            $msgtype   => $content
         );
 
         return $this->http->jsonPost(self::API_SEND, $params);
