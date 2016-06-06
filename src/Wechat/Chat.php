@@ -113,7 +113,7 @@ class Chat
      * @param  array $chat 会话
      * @return array
      */
-    public function clearnotify($chatid, $chat)
+    public function clearNotify($chatid, $chat)
     {
         $params = array(
             'chatid' => $chatid,
@@ -154,7 +154,7 @@ class Chat
      * @param  array $user_mute_list 成员新消息免打扰参数，数组，最大支持10000个成员
      * @return array
      */
-    public function setmute($user_mute_list)
+    public function setMute($user_mute_list)
     {
         $params = array(
             'user_mute_list' => $user_mute_list,
