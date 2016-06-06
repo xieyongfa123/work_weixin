@@ -94,8 +94,8 @@ class Authorize
     }
 
     /**
-     * 获取用户的openid|userid
-     * @return [type] [description]
+     * 获取企业号登录用户信息.
+     * @return array
      */
     public function user()
     {
