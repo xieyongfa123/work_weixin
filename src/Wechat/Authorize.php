@@ -40,7 +40,7 @@ class Authorize
 
     const API_USER = 'https://qyapi.weixin.qq.com/cgi-bin/service/get_login_info';
     const API_URL = 'https://qy.weixin.qq.com/cgi-bin/loginpage';
-	const API_SERVICE_URL = 'https://qyapi.weixin.qq.com/cgi-bin/service/get_login_url';
+    const API_SERVICE_URL = 'https://qyapi.weixin.qq.com/cgi-bin/service/get_login_url';
 
     /**
      * constructor.
@@ -70,13 +70,13 @@ class Authorize
         $to !== null || $to = Url::current();
 
         $params = array(
-                   'corp_id' => $this->appId,
-                   'redirect_uri' => $to,
-                   'state' => $state,
-				   'usertype' => $usertype
-                  );
+            'corp_id' => $this->appId,
+            'redirect_uri' => $to,
+            'state' => $state,
+            'usertype' => $usertype
+        );
 
-        return self::API_URL.'?'.http_build_query($params);
+        return self::API_URL . '?' . http_build_query($params);
     }
 
     /**
@@ -89,7 +89,7 @@ class Authorize
     public function redirect($to = null, $state = null, $usertype = null)
     {
         $state = $state ? $state : md5(time());
-        header('Location:'.$this->url($to, $state, $usertype));
+        header('Location:' . $this->url($to, $state, $usertype));
 
         exit;
     }
@@ -102,24 +102,24 @@ class Authorize
     {
         return $this->http->jsonPost(self::API_USER, array('auth_code' => $this->input->get('auth_code')));
     }
-	
+
     /**
      * 获取登录企业号官网的URL.
-	 *
-	 * @param string  $loginTicket
-	 * @param string  $target
-	 * @param integer $agentId
-	 *
+     *
+     * @param string $loginTicket
+     * @param string $target
+     * @param integer $agentId
+     *
      * @return array
      */
     public function getUrl($loginTicket, $target, $agentId = null)
     {
-		$params = array(
-                   'login_ticket' => $loginTicket,
-                   'target' => $target,
-                   'agentid' => $agentId
-                  );
-				  
+        $params = array(
+            'login_ticket' => $loginTicket,
+            'target' => $target,
+            'agentid' => $agentId
+        );
+
         return $this->http->jsonPost(self::API_SERVICE_URL, $params);
     }
 
