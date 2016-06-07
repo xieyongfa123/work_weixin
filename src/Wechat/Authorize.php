@@ -40,6 +40,7 @@ class Authorize
 
     const API_USER = 'https://qyapi.weixin.qq.com/cgi-bin/service/get_login_info';
     const API_URL = 'https://qy.weixin.qq.com/cgi-bin/loginpage';
+	const API_SERVICE_URL = 'https://qyapi.weixin.qq.com/cgi-bin/service/get_login_url';
 
     /**
      * constructor.
@@ -64,7 +65,7 @@ class Authorize
      *
      * @return string
      */
-    public function url($to = null, $state = 'STATE', $usertype = 'all')
+    public function url($to = null, $state = 'STATE', $usertype = 'admin')
     {
         $to !== null || $to = Url::current();
 
@@ -101,6 +102,26 @@ class Authorize
     {
         return $this->http->jsonPost(self::API_USER, array('auth_code' => $this->input->get('auth_code')));
     }
+	
+    /**
+     * 获取登录企业号官网的URL.
+	 *
+	 * @param string  $loginTicket
+	 * @param string  $target
+	 * @param integer $agentId
+	 *
+     * @return array
+     */
+    public function getUrl($loginTicket, $target, $agentId = null)
+    {
+		$params = array(
+                   'login_ticket' => $loginTicket,
+                   'target' => $target,
+                   'agentid' => $agentId
+                  );
+				  
+        return $this->http->jsonPost(self::API_SERVICE_URL, $params);
+    }
 
     /**
      * 通过授权获取用户.
@@ -111,7 +132,7 @@ class Authorize
      *
      * @return array | null
      */
-    public function authorize($to = null, $state = 'STATE', $usertype = 'all')
+    public function authorize($to = null, $state = 'STATE', $usertype = 'admin')
     {
         if (!$this->input->get('state') && !$this->input->get('auth_code')) {
             $this->redirect($to, $state, $usertype);
