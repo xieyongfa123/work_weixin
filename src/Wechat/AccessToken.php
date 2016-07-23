@@ -8,20 +8,19 @@ namespace Stoneworld\Wechat;
 class AccessToken
 {
 
+    const API_TOKEN_GET = 'https://qyapi.weixin.qq.com/cgi-bin/gettoken';
     /**
      * 应用ID
      *
      * @var string
      */
     protected $appId;
-
     /**
      * 应用secret
      *
      * @var string
      */
     protected $appSecret;
-
     /**
      * 缓存类
      *
@@ -29,15 +28,13 @@ class AccessToken
      */
     protected $cache;
 
+    // API
     /**
      * 缓存前缀
      *
      * @var string
      */
     protected $cacheKey = 'Stoneworld.wechat.access_token';
-
-    // API
-    const API_TOKEN_GET = 'https://qyapi.weixin.qq.com/cgi-bin/gettoken';
 
     /**
      * constructor
@@ -47,10 +44,10 @@ class AccessToken
      */
     public function __construct($appId, $appSecret)
     {
-        $this->appId     = $appId;
+        $this->appId = $appId;
         $this->appSecret = $appSecret;
-        $this->cacheKey = $this->cacheKey.'.'.$appId;
-        $this->cache     = new Cache($appId);
+        $this->cacheKey = $this->cacheKey . '.' . $appId;
+        $this->cache = new Cache($appId);
     }
 
     /**
@@ -98,8 +95,8 @@ class AccessToken
     {
         $http = new Http();
         $params = array(
-            'corpid'      => $this->appId,
-            'corpsecret'     => $this->appSecret,
+            'corpid' => $this->appId,
+            'corpsecret' => $this->appSecret,
         );
 
         $token = $http->get(self::API_TOKEN_GET, $params);

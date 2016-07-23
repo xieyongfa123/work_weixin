@@ -57,8 +57,8 @@ class Http
      * Make a HTTP GET request.
      *
      * @param string $url
-     * @param array  $params
-     * @param array  $options
+     * @param array $params
+     * @param array $options
      *
      * @return array
      */
@@ -68,75 +68,19 @@ class Http
     }
 
     /**
-     * Make a HTTP POST request.
-     *
-     * @param string $url
-     * @param array  $params
-     * @param array  $options
-     *
-     * @return array
-     */
-    public function post($url, $params = array(), $options = array())
-    {
-        return $this->request($url, self::POST, $params, $options);
-    }
-
-    /**
-     * Make a HTTP PUT request.
-     *
-     * @param string $url
-     * @param array  $params
-     * @param array  $options
-     *
-     * @return array
-     */
-    public function put($url, $params = array(), $options = array())
-    {
-        return $this->request($url, self::PUT, $params, $options);
-    }
-
-    /**
-     * Make a HTTP PATCH request.
-     *
-     * @param string $url
-     * @param array  $params
-     * @param array  $options
-     *
-     * @return array
-     */
-    public function patch($url, $params = array(), $options = array())
-    {
-        return $this->request($url, self::PATCH, $params, $options);
-    }
-
-    /**
-     * Make a HTTP DELETE request.
-     *
-     * @param string $url
-     * @param array  $params
-     * @param array  $options
-     *
-     * @return array
-     */
-    public function delete($url, $params = array(), $options = array())
-    {
-        return $this->request($url, self::DELETE, $params, $options);
-    }
-
-    /**
      * Make a HTTP request.
      *
      * @param string $url
      * @param string $method
-     * @param array  $params
-     * @param array  $options
+     * @param array $params
+     * @param array $options
      *
      * @return array
      */
     protected function request($url, $method = self::GET, $params = array(), $options = array())
     {
         if ($method === self::GET || $method === self::DELETE) {
-            $url .= (stripos($url, '?') ? '&' : '?').http_build_query($params);
+            $url .= (stripos($url, '?') ? '&' : '?') . http_build_query($params);
             $params = array();
         }
 
@@ -190,7 +134,7 @@ class Http
 
         // Check for basic auth
         if (isset($options['auth']['type']) && 'basic' === $options['auth']['type']) {
-            curl_setopt($this->curl, CURLOPT_USERPWD, $options['auth']['username'].':'.$options['auth']['password']);
+            curl_setopt($this->curl, CURLOPT_USERPWD, $options['auth']['username'] . ':' . $options['auth']['password']);
         }
 
         $response = $this->doCurl();
@@ -201,12 +145,12 @@ class Http
         $body = substr($response['response'], $headerSize);
 
         $results = array(
-                    'curl_info' => $response['curl_info'],
-                    'content_type' => $response['curl_info']['content_type'],
-                    'status' => $response['curl_info']['http_code'],
-                    'headers' => $this->splitHeaders($header),
-                    'data' => $body,
-                   );
+            'curl_info' => $response['curl_info'],
+            'content_type' => $response['curl_info']['content_type'],
+            'status' => $response['curl_info']['http_code'],
+            'headers' => $this->splitHeaders($header),
+            'data' => $body,
+        );
 
         return $results;
     }
@@ -224,7 +168,30 @@ class Http
             return curl_file_create($filename);
         }
 
-        return "@$filename;filename=".basename($filename);
+        return "@$filename;filename=" . basename($filename);
+    }
+
+    /**
+     * Perform the Curl request.
+     *
+     * @return array
+     */
+    protected function doCurl()
+    {
+        $response = curl_exec($this->curl);
+
+        if (curl_errno($this->curl)) {
+            throw new \Exception(curl_error($this->curl), 1);
+        }
+
+        $curlInfo = curl_getinfo($this->curl);
+
+        $results = array(
+            'curl_info' => $curlInfo,
+            'response' => $response,
+        );
+
+        return $results;
     }
 
     /**
@@ -253,25 +220,58 @@ class Http
     }
 
     /**
-     * Perform the Curl request.
+     * Make a HTTP POST request.
+     *
+     * @param string $url
+     * @param array $params
+     * @param array $options
      *
      * @return array
      */
-    protected function doCurl()
+    public function post($url, $params = array(), $options = array())
     {
-        $response = curl_exec($this->curl);
+        return $this->request($url, self::POST, $params, $options);
+    }
 
-        if (curl_errno($this->curl)) {
-            throw new \Exception(curl_error($this->curl), 1);
-        }
+    /**
+     * Make a HTTP PUT request.
+     *
+     * @param string $url
+     * @param array $params
+     * @param array $options
+     *
+     * @return array
+     */
+    public function put($url, $params = array(), $options = array())
+    {
+        return $this->request($url, self::PUT, $params, $options);
+    }
 
-        $curlInfo = curl_getinfo($this->curl);
+    /**
+     * Make a HTTP PATCH request.
+     *
+     * @param string $url
+     * @param array $params
+     * @param array $options
+     *
+     * @return array
+     */
+    public function patch($url, $params = array(), $options = array())
+    {
+        return $this->request($url, self::PATCH, $params, $options);
+    }
 
-        $results = array(
-                    'curl_info' => $curlInfo,
-                    'response' => $response,
-                   );
-
-        return $results;
+    /**
+     * Make a HTTP DELETE request.
+     *
+     * @param string $url
+     * @param array $params
+     * @param array $options
+     *
+     * @return array
+     */
+    public function delete($url, $params = array(), $options = array())
+    {
+        return $this->request($url, self::DELETE, $params, $options);
     }
 }

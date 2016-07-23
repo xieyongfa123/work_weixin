@@ -8,9 +8,9 @@ use Stoneworld\Wechat\Utils\XML;
 /**
  * 消息基类
  *
- * @property string      $from
- * @property string      $to
- * @property string      $staff
+ * @property string $from
+ * @property string $to
+ * @property string $staff
  *
  * @method BaseMessage to($to)
  * @method BaseMessage from($from)
@@ -35,12 +35,12 @@ abstract class BaseMessage extends MagicAttributes
      * @var array
      */
     protected $baseProperties = array(
-                                 'from',
-                                 'to',
-                                 'to_group',
-                                 'to_all',
-                                 'staff',
-                                );
+        'from',
+        'to',
+        'to_group',
+        'to_all',
+        'staff',
+    );
 
     /**
      * 生成用于主动推送的数据
@@ -50,18 +50,30 @@ abstract class BaseMessage extends MagicAttributes
     public function buildForStaff()
     {
         if (!method_exists($this, 'toStaff')) {
-            throw new \Exception(__CLASS__.'未实现此方法：toStaff()');
+            throw new \Exception(__CLASS__ . '未实现此方法：toStaff()');
         }
 
         $base = array(
-                 'touser'  => $this->to,
-                 'msgtype' => $this->getDefaultMessageType(),
-                );
+            'touser' => $this->to,
+            'msgtype' => $this->getDefaultMessageType(),
+        );
         if (!empty($this->staff)) {
             $base['customservice'] = array('kf_account' => $this->staff);
         }
 
         return array_merge($base, $this->toStaff());
+    }
+
+    /**
+     * 获取默认的消息类型名称
+     *
+     * @return string
+     */
+    public function getDefaultMessageType()
+    {
+        $class = explode('\\', get_class($this));
+
+        return strtolower(array_pop($class));
     }
 
     /**
@@ -72,15 +84,15 @@ abstract class BaseMessage extends MagicAttributes
     public function buildForReply()
     {
         if (!method_exists($this, 'toReply')) {
-            throw new \Exception(__CLASS__.'未实现此方法：toReply()');
+            throw new \Exception(__CLASS__ . '未实现此方法：toReply()');
         }
 
         $base = array(
-                 'ToUserName'   => $this->to,
-                 'FromUserName' => $this->from,
-                 'CreateTime'   => time(),
-                 'MsgType'      => $this->getDefaultMessageType(),
-                );
+            'ToUserName' => $this->to,
+            'FromUserName' => $this->from,
+            'CreateTime' => time(),
+            'MsgType' => $this->getDefaultMessageType(),
+        );
 
         return XML::build(array_merge($base, $this->toReply()));
     }
@@ -93,14 +105,14 @@ abstract class BaseMessage extends MagicAttributes
     public function buildForBroadcast()
     {
         if (!method_exists($this, 'toStaff')) {
-            throw new \Exception(__CLASS__.'未实现此方法：toStaff()');
+            throw new \Exception(__CLASS__ . '未实现此方法：toStaff()');
         }
         $group = array(
-                'touser' => $this->touser,
-                'toparty' => $this->toparty,
-                'totag'   => $this->totag,
-                'agentid' => $this->agentid,
-            );
+            'touser' => $this->touser,
+            'toparty' => $this->toparty,
+            'totag' => $this->totag,
+            'agentid' => $this->agentid,
+        );
         $base = array(
             'safe' => 0,
             'msgtype' => $this->getDefaultMessageType(),
@@ -121,7 +133,7 @@ abstract class BaseMessage extends MagicAttributes
     public function buildForBroadcastPreview($type)
     {
         if (!method_exists($this, 'toStaff')) {
-            throw new \Exception(__CLASS__.'未实现此方法：toStaff()');
+            throw new \Exception(__CLASS__ . '未实现此方法：toStaff()');
         }
 
         $base = array(
@@ -133,22 +145,10 @@ abstract class BaseMessage extends MagicAttributes
     }
 
     /**
-     * 获取默认的消息类型名称
-     *
-     * @return string
-     */
-    public function getDefaultMessageType()
-    {
-        $class = explode('\\', get_class($this));
-
-        return strtolower(array_pop($class));
-    }
-
-    /**
      * 验证
      *
      * @param string $attribute
-     * @param mixed  $value
+     * @param mixed $value
      *
      * @return bool
      */

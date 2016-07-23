@@ -18,11 +18,11 @@ class Location extends BaseMessage
      * @var array
      */
     protected $properties = array(
-                             'lat',
-                             'lon',
-                             'scale',
-                             'label',
-                            );
+        'lat',
+        'lon',
+        'scale',
+        'label',
+    );
 
     /**
      * 生成主动消息数组

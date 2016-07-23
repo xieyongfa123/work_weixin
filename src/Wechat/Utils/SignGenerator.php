@@ -68,18 +68,7 @@ class SignGenerator extends MagicAttributes
      */
     public function setUpper($value)
     {
-        return $this->isUpper = (bool) $value;
-    }
-
-    /**
-     * 将全部项目排序.
-     */
-    public function sortable()
-    {
-        ksort($this->attributes);
-        if (is_callable($this->sortAfterCallback)) {
-            call_user_func($this->sortAfterCallback, $this);
-        }
+        return $this->isUpper = (bool)$value;
     }
 
     /**
@@ -105,5 +94,16 @@ class SignGenerator extends MagicAttributes
         $result = call_user_func($this->hashType, $query);
 
         return $this->isUpper ? strtoupper($result) : $result;
+    }
+
+    /**
+     * 将全部项目排序.
+     */
+    public function sortable()
+    {
+        ksort($this->attributes);
+        if (is_callable($this->sortAfterCallback)) {
+            call_user_func($this->sortAfterCallback, $this);
+        }
     }
 }

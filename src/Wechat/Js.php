@@ -11,7 +11,6 @@ class Js
 {
     const API_TICKET = 'https://qyapi.weixin.qq.com/cgi-bin/get_jsapi_ticket';
     const API_TICKET_CONTACT = 'https://qyapi.weixin.qq.com/cgi-bin/ticket/get?type=contact';
-	
     /**
      * 应用ID.
      *

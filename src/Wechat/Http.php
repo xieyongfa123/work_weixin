@@ -3,7 +3,6 @@
 namespace Stoneworld\Wechat;
 
 use Stoneworld\Wechat\Utils\Http as HttpClient;
-use Stoneworld\Wechat\Utils\JSON;
 
 /**
  * @method mixed jsonPost($url, $params = array(), $options = array())
@@ -56,11 +55,11 @@ class Http extends HttpClient
     /**
      * 发起一个HTTP/HTTPS的请求
      *
-     * @param string $url     接口的URL
-     * @param string $method  请求类型   GET | POST
-     * @param array  $params  接口参数
-     * @param array  $options 其它选项
-     * @param int    $retry   重试次数
+     * @param string $url 接口的URL
+     * @param string $method 请求类型   GET | POST
+     * @param array $params 接口参数
+     * @param array $options 其它选项
+     * @param int $retry 重试次数
      *
      * @return array | boolean
      */
@@ -68,7 +67,7 @@ class Http extends HttpClient
     {
         if ($this->token) {
             $url = preg_replace('/[\?&]access_token=.*?/i', '', $url);
-            $url .= (stripos($url, '?') ? '&' : '?').'access_token='. $this->token->getToken();
+            $url .= (stripos($url, '?') ? '&' : '?') . 'access_token=' . $this->token->getToken();
         }
 
         $method = strtoupper($method);
@@ -109,7 +108,7 @@ class Http extends HttpClient
                 return $this->request($url, $method, $params, $options, --$retry);
             }
 
-            throw new Exception("[{$contents['errcode']}] ".$contents['errmsg'], $contents['errcode']);
+            throw new Exception("[{$contents['errcode']}] " . $contents['errmsg'], $contents['errcode']);
         }
 
         if ($contents === array('errcode' => '0', 'errmsg' => 'ok')) {
@@ -123,7 +122,7 @@ class Http extends HttpClient
      * 魔术调用
      *
      * @param string $method
-     * @param array  $args
+     * @param array $args
      *
      * @return mixed
      */

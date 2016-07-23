@@ -2,10 +2,9 @@
 
 namespace Stoneworld\Wechat;
 
+use Stoneworld\Wechat\Messages\BaseMessage;
 use Stoneworld\Wechat\Utils\Bag;
 use Stoneworld\Wechat\Utils\XML;
-use Stoneworld\Wechat\Crypt;
-use Stoneworld\Wechat\Messages\BaseMessage;
 
 class Server
 {
@@ -59,10 +58,10 @@ class Server
      * @var array
      */
     protected $events = array(
-                         'received',
-                         'served',
-                         'responseCreated',
-                        );
+        'received',
+        'served',
+        'responseCreated',
+    );
 
     protected $encryptStr;
 
@@ -80,9 +79,9 @@ class Server
     /**
      * 监听
      *
-     * @param string          $target
+     * @param string $target
      * @param string|callable $type
-     * @param callable        $callback
+     * @param callable $callback
      *
      * @return Server
      */
@@ -90,7 +89,7 @@ class Server
     {
         if (is_null($callback)) {
             $callback = $type;
-            $type     = '*';
+            $type = '*';
         }
 
         if (!is_callable($callback)) {
@@ -112,7 +111,7 @@ class Server
      * 监听事件
      *
      * @param string|callable $type
-     * @param callable        $callback
+     * @param callable $callback
      *
      * @return Server
      */
@@ -125,7 +124,7 @@ class Server
      * 监听消息
      *
      * @param string|callable $type
-     * @param callable        $callback
+     * @param callable $callback
      *
      * @return Server
      */
@@ -139,7 +138,7 @@ class Server
      *
      * @return mixed
      */
-    public function server()
+    public function serve()
     {
         $this->prepareInput();
 
@@ -161,7 +160,7 @@ class Server
         if ($this->input->get('echostr')) {
 
             $xml = $this->getCrypt()->decrypt($this->input->get('echostr'), $this->appId);
-            
+
             return strip_tags($xml);
         }
 
@@ -182,28 +181,35 @@ class Server
 
         $input = array();
 
-        if ($_SERVER['REQUEST_METHOD'] == "POST") {
-
-            $xmlInput = file_get_contents('php://input');
-
-            $array = XML::parse($xmlInput);
-
-            if (isset($array['Encrypt'])) {
-                $this->encryptStr = $array['Encrypt'];
+        if (version_compare(PHP_VERSION, '5.6.0', '<')) {
+            if (!empty($GLOBALS['HTTP_RAW_POST_DATA'])) {
+                $xmlInput = $GLOBALS['HTTP_RAW_POST_DATA'];
+            } else {
+                $xmlInput = file_get_contents('php://input');
             }
 
-            $input = $this->getCrypt()->decryptMsg(
-                    $_REQUEST['msg_signature'],
-                    $_REQUEST['nonce'],
-                    $_REQUEST['timestamp'],
-                    $xmlInput
-                );
+            if (empty($_REQUEST['echostr']) && empty($xmlInput) && !empty($_REQUEST['msg_signature'])) {
+                throw new Exception('没有读取到消息 XML，请在 php.ini 中打开 always_populate_raw_post_data=On', 500);
+            }
+        } else {
+            $xmlInput = file_get_contents('php://input');
         }
 
-        $this->input = new Bag(array_merge($_REQUEST, (array) $input));
+        $input = XML::parse($xmlInput);
 
+        if (isset($input['Encrypt'])) {
+            $this->encryptStr = $input['Encrypt'];
+
+            $input = $this->getCrypt()->decryptMsg(
+                $_REQUEST['msg_signature'],
+                $_REQUEST['nonce'],
+                $_REQUEST['timestamp'],
+                $xmlInput
+            );
+        }
+
+        $this->input = new Bag(array_merge($_REQUEST, (array)$input));
     }
-
 
     /**
      * 获取Crypt服务
@@ -279,7 +285,7 @@ class Server
     protected function handleRequest()
     {
         $this->call('received', array($this->input));
-        
+
         if ($this->input->get('MsgType') && $this->input->get('MsgType') === 'event') {
             return $this->handleEvent($this->input);
         } elseif ($this->input->get('MsgId')) {
@@ -338,15 +344,15 @@ class Server
     /**
      * 调用监听器
      *
-     * @param string      $key
-     * @param array       $args
+     * @param string $key
+     * @param array $args
      * @param string|null $default
      *
      * @return mixed
      */
     protected function call($key, $args, $default = null)
     {
-        $handlers = (array) $this->listeners[$key];
+        $handlers = (array)$this->listeners[$key];
 
         foreach ($handlers as $handler) {
             if (!is_callable($handler)) {
@@ -367,14 +373,14 @@ class Server
      * 魔术调用
      *
      * @param string $method
-     * @param array  $args
+     * @param array $args
      *
      * @return mixed
      */
     public function __call($method, $args)
     {
         if (in_array($method, $this->events, true)) {
-            
+
             $callback = array_shift($args);
 
             is_callable($callback) && $this->listeners->set($method, $callback);
@@ -390,7 +396,7 @@ class Server
      */
     public function __toString()
     {
-        return ''.$this->serve();
+        return '' . $this->serve();
     }
 
 }

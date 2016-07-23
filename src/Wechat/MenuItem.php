@@ -2,8 +2,8 @@
 
 namespace Stoneworld\Wechat;
 
-use Stoneworld\Wechat\Utils\MagicAttributes;
 use Closure;
+use Stoneworld\Wechat\Utils\MagicAttributes;
 
 /**
  * 菜单项
@@ -27,7 +27,7 @@ class MenuItem extends MagicAttributes
         $type !== null && $this->with('type', $type);
 
         if ($property !== null) {
-            switch($type){
+            switch ($type) {
                 case 'view':
                     $key = 'url';
                     break;

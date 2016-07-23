@@ -9,38 +9,32 @@ use Stoneworld\Wechat\Utils\Bag;
  */
 class Authorize
 {
+    const API_USER = 'https://qyapi.weixin.qq.com/cgi-bin/service/get_login_info';
+    const API_URL = 'https://qy.weixin.qq.com/cgi-bin/loginpage';
     /**
      * 应用ID.
      *
      * @var string
      */
     protected $appId;
-
     /**
      * 应用secret.
      *
      * @var string
      */
     protected $appSecret;
-
     /**
      * Http对象
      *
      * @var Http
      */
     protected $http;
-
     /**
      * 输入.
      *
      * @var Bag
      */
     protected $input;
-
-
-    const API_USER = 'https://qyapi.weixin.qq.com/cgi-bin/service/get_login_info';
-    const API_URL = 'https://qy.weixin.qq.com/cgi-bin/loginpage';
-    const API_SERVICE_URL = 'https://qyapi.weixin.qq.com/cgi-bin/service/get_login_url';
 
     /**
      * constructor.
@@ -57,26 +51,21 @@ class Authorize
     }
 
     /**
-     * 生成outh URL.
+     * 通过授权获取用户.
      *
      * @param string $to
      * @param string $state
      * @param string $usertype
      *
-     * @return string
+     * @return array | null
      */
-    public function url($to = null, $state = 'STATE', $usertype = 'admin')
+    public function authorize($to = null, $state = 'STATE', $usertype = 'all')
     {
-        $to !== null || $to = Url::current();
+        if (!$this->input->get('state') && !$this->input->get('auth_code')) {
+            $this->redirect($to, $state, $usertype);
+        }
 
-        $params = array(
-            'corp_id' => $this->appId,
-            'redirect_uri' => $to,
-            'state' => $state,
-            'usertype' => $usertype
-        );
-
-        return self::API_URL . '?' . http_build_query($params);
+        return $this->user();
     }
 
     /**
@@ -95,49 +84,34 @@ class Authorize
     }
 
     /**
+     * 生成outh URL.
+     *
+     * @param string $to
+     * @param string $state
+     * @param string $usertype
+     *
+     * @return string
+     */
+    public function url($to = null, $state = 'STATE', $usertype = 'all')
+    {
+        $to !== null || $to = Url::current();
+
+        $params = array(
+            'corp_id' => $this->appId,
+            'redirect_uri' => $to,
+            'state' => $state,
+            'usertype' => $usertype
+        );
+
+        return self::API_URL . '?' . http_build_query($params);
+    }
+
+    /**
      * 获取企业号登录用户信息.
      * @return array
      */
     public function user()
     {
         return $this->http->jsonPost(self::API_USER, array('auth_code' => $this->input->get('auth_code')));
-    }
-
-    /**
-     * 获取登录企业号官网的URL.
-     *
-     * @param string $loginTicket
-     * @param string $target
-     * @param integer $agentId
-     *
-     * @return array
-     */
-    public function getUrl($loginTicket, $target, $agentId = null)
-    {
-        $params = array(
-            'login_ticket' => $loginTicket,
-            'target' => $target,
-            'agentid' => $agentId
-        );
-
-        return $this->http->jsonPost(self::API_SERVICE_URL, $params);
-    }
-
-    /**
-     * 通过授权获取用户.
-     *
-     * @param string $to
-     * @param string $state
-     * @param string $usertype
-     *
-     * @return array | null
-     */
-    public function authorize($to = null, $state = 'STATE', $usertype = 'admin')
-    {
-        if (!$this->input->get('state') && !$this->input->get('auth_code')) {
-            $this->redirect($to, $state, $usertype);
-        }
-
-        return $this->user();
     }
 }

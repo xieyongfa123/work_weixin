@@ -16,8 +16,8 @@ class Link extends BaseMessage
      * @var array
      */
     protected $properties = array(
-                             'title',
-                             'description',
-                             'url',
-                            );
+        'title',
+        'description',
+        'url',
+    );
 }

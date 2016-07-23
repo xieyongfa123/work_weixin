@@ -39,10 +39,10 @@ class MpNews extends BaseMessage
     public function toStaff()
     {
         return array(
-                'mpnews' => array(
-                            'media_id' => $this->media_id,
-                           ),
-               );
+            'mpnews' => array(
+                'media_id' => $this->media_id,
+            ),
+        );
     }
 
     /**
@@ -52,7 +52,7 @@ class MpNews extends BaseMessage
      */
     public function toReply()
     {
-        throw new \Exception(__CLASS__.'未实现此方法：toReply()');
+        throw new \Exception(__CLASS__ . '未实现此方法：toReply()');
         /*return array(
                 'Image' => array(
                             'MediaId' => $this->media_id,

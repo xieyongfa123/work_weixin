@@ -42,7 +42,7 @@ class Broadcast
     /**
      * 群发来源应用
      * @param  int $agentId
-     * @return 
+     * @return
      */
     public function fromAgentId($agentId)
     {
@@ -71,18 +71,27 @@ class Broadcast
     }
 
     /**
+     * 群发应用所见所有人
+     * @return
+     */
+    public function toAll()
+    {
+        return $this->to();
+    }
+
+    /**
      * 消息群发
-     * @param  string|array $user    指定用户群
+     * @param  string|array $user 指定用户群
      * @param  string|array $toParty 指定部门
-     * @param  string|array $toTag   指定标签 
-     * @return 
+     * @param  string|array $toTag 指定标签
+     * @return
      */
     public function to($user = '@all', $toParty = null, $toTag = null)
     {
         if (empty($this->message)) {
             throw new Exception('未设置要发送的消息');
         }
-        
+
         $this->message->agentid = $this->agentid;
 
         $this->message->touser = is_array($user) ? implode('|', $user) : $user;
@@ -95,18 +104,9 @@ class Broadcast
     }
 
     /**
-     * 群发应用所见所有人
-     * @return 
-     */
-    public function toAll()
-    {
-        return $this->to();
-    }
-
-    /**
      * 按部门发送
      * @param  int|array $toParty array(1, 2, 3)
-     * @return 
+     * @return
      */
     public function toParty($toParty)
     {
