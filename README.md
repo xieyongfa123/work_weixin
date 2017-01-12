@@ -30,7 +30,7 @@ require "wechat/autoload.php"; // 路径请修改为你具体的实际路径
 ```
 <?php
 
-use Stoneowrld\Wechat\Server;
+use Stoneworld\Wechat\Server;
 
 $options = array(
             'token'=>'stoneworld1992',   //填写应用接口的Token
