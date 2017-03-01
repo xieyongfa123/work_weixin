@@ -14,9 +14,9 @@ class NewsItem extends BaseMessage
      * @var array
      */
     protected $properties = array(
-        'title',
-        'description',
-        'pic_url',
-        'url',
-    );
+                             'title',
+                             'description',
+                             'pic_url',
+                             'url',
+                            );
 }

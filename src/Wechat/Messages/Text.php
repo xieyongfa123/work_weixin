@@ -25,10 +25,10 @@ class Text extends BaseMessage
     public function toStaff()
     {
         return array(
-            'text' => array(
-                'content' => $this->content,
-            ),
-        );
+                'text' => array(
+                           'content' => $this->content,
+                          ),
+               );
     }
 
     /**
@@ -39,7 +39,7 @@ class Text extends BaseMessage
     public function toReply()
     {
         return array(
-            'Content' => $this->content,
-        );
+                'Content' => $this->content,
+               );
     }
 }

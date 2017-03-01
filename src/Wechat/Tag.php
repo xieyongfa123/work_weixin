@@ -7,13 +7,13 @@ namespace Stoneworld\Wechat;
  */
 class Tag
 {
-    const API_GET = 'https://qyapi.weixin.qq.com/cgi-bin/tag/get';
-    const API_CREATE = 'https://qyapi.weixin.qq.com/cgi-bin/tag/create';
-    const API_UPDATE = 'https://qyapi.weixin.qq.com/cgi-bin/tag/update';
-    const API_DELETE = 'https://qyapi.weixin.qq.com/cgi-bin/tag/delete';
-    const API_ADD_USER = 'https://qyapi.weixin.qq.com/cgi-bin/tag/addtagusers';
-    const API_DELETE_USER = 'https://qyapi.weixin.qq.com/cgi-bin/tag/deltagusers';
-    const API_GET_LIST = 'https://qyapi.weixin.qq.com/cgi-bin/tag/list';
+    const API_GET                 = 'https://qyapi.weixin.qq.com/cgi-bin/tag/get';
+    const API_CREATE              = 'https://qyapi.weixin.qq.com/cgi-bin/tag/create';
+    const API_UPDATE              = 'https://qyapi.weixin.qq.com/cgi-bin/tag/update';
+    const API_DELETE              = 'https://qyapi.weixin.qq.com/cgi-bin/tag/delete';
+    const API_ADD_USER            = 'https://qyapi.weixin.qq.com/cgi-bin/tag/addtagusers';
+    const API_DELETE_USER         = 'https://qyapi.weixin.qq.com/cgi-bin/tag/deltagusers';
+    const API_GET_LIST            = 'https://qyapi.weixin.qq.com/cgi-bin/tag/list';
 
     /**
      * Http对象
@@ -35,32 +35,32 @@ class Tag
 
     /**
      * 创建标签
-     * @param  sting $tagName 标签名
-     * @param  integer $tagId 标签id
+     * @param  sting   $tagName 标签名
+     * @param  integer $tagId   标签id
      * @return array
      */
     public function create($tagName, $tagId = null)
     {
         $params = array(
-            'tagname' => $tagName,
-            'tagid' => $tagId
-        );
+                    'tagname' => $tagName,
+                    'tagid'   => $tagId
+                );
 
         return $this->http->jsonPost(self::API_CREATE, $params);
     }
 
     /**
      * 更新标签
-     * @param  integer $tagId
-     * @param  string $tagName
+     * @param  integer $tagId   
+     * @param  string  $tagName 
      * @return array
      */
     public function update($tagId, $tagName)
     {
         $params = array(
-            'tagid' => $tagId,
-            'tagname' => $tagName
-        );
+                    'tagid'   => $tagId,
+                    'tagname' => $tagName
+                );
 
         return $this->http->jsonPost(self::API_UPDATE, $params);
     }
@@ -79,18 +79,18 @@ class Tag
 
     /**
      * 增加标签成员
-     * @param  int $tagId
-     * @param  array $userList
-     * @param  array $partyList
-     * @return array
+     * @param  int    $tagId     
+     * @param  array  $userList  
+     * @param  array  $partyList
+     * @return array 
      */
     public function addUser($tagId, $userList, $partyList)
     {
-        $params = array(
-            'tagid' => $tagId,
-            'userlist' => $userList,
-            'partylist' => $partyList
-        );
+        $params = array(           
+                    'tagid'     => $tagId,
+                    'userlist'  => $userList,
+                    'partylist' => $partyList
+                );
 
         return $this->http->jsonPost(self::API_ADD_USER, $params);
     }
@@ -107,18 +107,18 @@ class Tag
 
     /**
      * 删除标签成员
-     * @param  int $tagId
-     * @param  array $userList
-     * @param  array $partyList
-     * @return array
+     * @param  int    $tagId     
+     * @param  array  $userList  
+     * @param  array  $partyList
+     * @return array 
      */
     public function deleteTagUser($tagId, $userList, $partyList)
     {
-        $params = array(
-            'tagid' => $tagId,
-            'userlist' => $userList,
-            'partylist' => $partyList
-        );
+        $params = array(           
+                    'tagid'     => $tagId,
+                    'userlist'  => $userList,
+                    'partylist' => $partyList
+                );
 
         return $this->http->jsonPost(self::API_DELETE_USER, $params);
     }

@@ -7,8 +7,8 @@ namespace Stoneworld\Wechat;
  */
 class Agent
 {
-    const API_GET = 'https://qyapi.weixin.qq.com/cgi-bin/agent/get';
-    const API_SET = 'https://qyapi.weixin.qq.com/cgi-bin/agent/set';
+    const API_GET  = 'https://qyapi.weixin.qq.com/cgi-bin/agent/get';
+    const API_SET  = 'https://qyapi.weixin.qq.com/cgi-bin/agent/set';
     const API_LIST = 'https://qyapi.weixin.qq.com/cgi-bin/agent/list';
 
     /**

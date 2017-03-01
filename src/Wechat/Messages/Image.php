@@ -39,10 +39,10 @@ class Image extends BaseMessage
     public function toStaff()
     {
         return array(
-            'image' => array(
-                'media_id' => $this->media_id,
-            ),
-        );
+                'image' => array(
+                            'media_id' => $this->media_id,
+                           ),
+               );
     }
 
     /**
@@ -53,9 +53,9 @@ class Image extends BaseMessage
     public function toReply()
     {
         return array(
-            'Image' => array(
-                'MediaId' => $this->media_id,
-            ),
-        );
+                'Image' => array(
+                            'MediaId' => $this->media_id,
+                           ),
+               );
     }
 }

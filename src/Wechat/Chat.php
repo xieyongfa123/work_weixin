@@ -7,13 +7,13 @@ namespace Stoneworld\Wechat;
  */
 class Chat
 {
-    const API_GET = 'https://qyapi.weixin.qq.com/cgi-bin/chat/get';
-    const API_CREATE = 'https://qyapi.weixin.qq.com/cgi-bin/chat/create';
-    const API_UPDATE = 'https://qyapi.weixin.qq.com/cgi-bin/chat/update';
-    const API_QUIT = 'https://qyapi.weixin.qq.com/cgi-bin/chat/quit';
+    const API_GET         = 'https://qyapi.weixin.qq.com/cgi-bin/chat/get';
+    const API_CREATE      = 'https://qyapi.weixin.qq.com/cgi-bin/chat/create';
+    const API_UPDATE      = 'https://qyapi.weixin.qq.com/cgi-bin/chat/update';
+    const API_QUIT        = 'https://qyapi.weixin.qq.com/cgi-bin/chat/quit';
     const API_CLEARNOTIFY = 'https://qyapi.weixin.qq.com/cgi-bin/chat/clearnotify';
-    const API_SEND = 'https://qyapi.weixin.qq.com/cgi-bin/chat/send';
-    const API_SETMUTE = 'https://qyapi.weixin.qq.com/cgi-bin/chat/setmute';
+    const API_SEND        = 'https://qyapi.weixin.qq.com/cgi-bin/chat/send';
+    const API_SETMUTE     = 'https://qyapi.weixin.qq.com/cgi-bin/chat/setmute';
 
     /**
      * Http对象
@@ -35,10 +35,10 @@ class Chat
 
     /**
      * 创建会话
-     * @param  string $chatid 会话id
-     * @param  string $name 会话标题
-     * @param  string $owner 管理员userid
-     * @param  array $userlist 会话成员列表
+     * @param  string $chatid    会话id
+     * @param  string $name      会话标题
+     * @param  string $owner     管理员userid
+     * @param  array  $userlist  会话成员列表
      * @return integer           部门id
      */
     public function create($chatid, $name, $owner, $userlist)
@@ -69,10 +69,10 @@ class Chat
 
     /**
      * 修改会话信息
-     * @param  string $chatid 会话id
+     * @param  string $chatid  会话id
      * @param  string $op_user 操作人userid
-     * @param  string $name 会话标题
-     * @param  string $owner 管理员userid
+     * @param  string $name    会话标题
+     * @param  string $owner   管理员userid
      * @return array
      */
     public function update($chatid, $op_user, $name = null, $owner = null, $add_user_list = array(), $del_user_list = array())
@@ -109,7 +109,7 @@ class Chat
     /**
      * 清除会话未读状态
      *
-     * @param  int $id 会话所有者的userid
+     * @param  int   $id   会话所有者的userid
      * @param  array $chat 会话
      * @return array
      */
@@ -126,11 +126,11 @@ class Chat
     /**
      * 发消息
      *
-     * @param  array $type 接收人类型：single|group，分别表示：群聊|单聊
-     * @param  array $id 接收人的值，为userid|chatid，分别表示：成员id|会话id
-     * @param  string $sender 发送人
+     * @param  array  $type    接收人类型：single|group，分别表示：群聊|单聊
+     * @param  array  $id      接收人的值，为userid|chatid，分别表示：成员id|会话id
+     * @param  string $sender  发送人
      * @param  string $msgtype 消息类型
-     * @param  array $content 消息内容
+     * @param  array  $content 消息内容
      * @return array
      */
     public function send($type, $id, $sender, $msgtype, $content)

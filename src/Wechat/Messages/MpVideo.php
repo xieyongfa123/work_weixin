@@ -41,7 +41,7 @@ class MpVideo extends BaseMessage
     {
         return array(
             'mpvideo' => array(
-                'media_id' => $this->media_id,
+                'media_id'       => $this->media_id,
             ),
         );
     }

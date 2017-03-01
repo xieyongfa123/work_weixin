@@ -11,10 +11,10 @@ use Closure;
  */
 class Menu
 {
-    const API_CREATE = 'https://qyapi.weixin.qq.com/cgi-bin/menu/create';
-    const API_GET = 'https://qyapi.weixin.qq.com/cgi-bin/menu/get';
-    const API_DELETE = 'https://qyapi.weixin.qq.com/cgi-bin/menu/delete';
-    const API_QUERY = 'https://api.weixin.qq.com/cgi-bin/get_current_selfmenu_info';
+    const API_CREATE             = 'https://qyapi.weixin.qq.com/cgi-bin/menu/create';
+    const API_GET                = 'https://qyapi.weixin.qq.com/cgi-bin/menu/get';
+    const API_DELETE             = 'https://qyapi.weixin.qq.com/cgi-bin/menu/delete';
+    const API_QUERY              = 'https://api.weixin.qq.com/cgi-bin/get_current_selfmenu_info';
 
     /**
      * Http对象
@@ -43,7 +43,31 @@ class Menu
     {
         $menus = $this->extractMenus($menus);
 
-        $this->http->jsonPost(self::API_CREATE . '?agentid=' . $agentId, array('button' => $menus));
+        $this->http->jsonPost(self::API_CREATE.'?agentid='.$agentId, array('button' => $menus));
+
+        return true;
+    }
+
+    /**
+     * 获取菜单
+     *
+     * @return array
+     */
+    public function get($agentId)
+    {
+        $menus = $this->http->get(self::API_GET.'?agentid='.$agentId);
+
+        return empty($menus['menu']['button']) ? array() : $menus['menu']['button'];
+    }
+
+    /**
+     * 删除菜单
+     *
+     * @return bool
+     */
+    public function delete($agentId)
+    {
+        $this->http->get(self::API_DELETE.'?agentid='.$agentId);
 
         return true;
     }
@@ -74,29 +98,5 @@ class Menu
         }
 
         return $menus;
-    }
-
-    /**
-     * 获取菜单
-     *
-     * @return array
-     */
-    public function get($agentId)
-    {
-        $menus = $this->http->get(self::API_GET . '?agentid=' . $agentId);
-
-        return empty($menus['menu']['button']) ? array() : $menus['menu']['button'];
-    }
-
-    /**
-     * 删除菜单
-     *
-     * @return bool
-     */
-    public function delete($agentId)
-    {
-        $this->http->get(self::API_DELETE . '?agentid=' . $agentId);
-
-        return true;
     }
 }

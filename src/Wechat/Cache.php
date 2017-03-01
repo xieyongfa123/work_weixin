@@ -9,23 +9,25 @@ class Cache
 {
 
     /**
+     * 缓存文件前缀
+     *
+     * @var string
+     */
+    protected $prefix;
+
+    /**
      * 缓存写入器
      *
      * @var callable
      */
     protected static $cacheSetter;
+
     /**
      * 缓存读取器
      *
      * @var callable
      */
     protected static $cacheGetter;
-    /**
-     * 缓存文件前缀
-     *
-     * @var string
-     */
-    protected $prefix;
 
     /**
      * 设置缓存文件前缀
@@ -38,31 +40,11 @@ class Cache
     }
 
     /**
-     * 设置缓存写入器
-     *
-     * @param callable $handler
-     */
-    public static function setter($handler)
-    {
-        is_callable($handler) && self::$cacheSetter = $handler;
-    }
-
-    /**
-     * 设置缓存读取器
-     *
-     * @param callable $handler
-     */
-    public static function getter($handler)
-    {
-        is_callable($handler) && self::$cacheGetter = $handler;
-    }
-
-    /**
      * 默认的缓存写入器
      *
      * @param string $key
-     * @param mixed $value
-     * @param int $lifetime
+     * @param mixed  $value
+     * @param int    $lifetime
      */
     public function set($key, $value, $lifetime = 7200)
     {
@@ -71,9 +53,9 @@ class Cache
         }
 
         $data = array(
-            'data' => $value,
-            'expired_at' => time() + $lifetime - 500, //XXX: 微信API是世界上最烂的，没有之一
-        );
+                 'data'       => $value,
+                 'expired_at' => time() + $lifetime - 500, //XXX: 微信API是世界上最烂的，没有之一
+                );
 
         if (!file_put_contents($this->getCacheFile($key), serialize($data))) {
             throw new Exception('Access toekn 缓存失败');
@@ -81,22 +63,10 @@ class Cache
     }
 
     /**
-     * 获取缓存文件名
-     *
-     * @param string $key
-     *
-     * @return string
-     */
-    protected function getCacheFile($key)
-    {
-        return sys_get_temp_dir() . DIRECTORY_SEPARATOR . md5($this->prefix . $key);
-    }
-
-    /**
      * 默认的缓存读取器
      *
      * @param string $key
-     * @param mixed $default
+     * @param mixed  $default
      */
     public function get($key, $default = null)
     {
@@ -133,5 +103,37 @@ class Cache
         }
 
         return true;
+    }
+
+    /**
+     * 设置缓存写入器
+     *
+     * @param callable $handler
+     */
+    public static function setter($handler)
+    {
+        is_callable($handler) && self::$cacheSetter = $handler;
+    }
+
+    /**
+     * 设置缓存读取器
+     *
+     * @param callable $handler
+     */
+    public static function getter($handler)
+    {
+        is_callable($handler) && self::$cacheGetter = $handler;
+    }
+
+    /**
+     * 获取缓存文件名
+     *
+     * @param string $key
+     *
+     * @return string
+     */
+    protected function getCacheFile($key)
+    {
+        return sys_get_temp_dir().DIRECTORY_SEPARATOR.md5($this->prefix.$key);
     }
 }

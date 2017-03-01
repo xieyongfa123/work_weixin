@@ -32,7 +32,7 @@ class Bag implements
      */
     public function __construct($data = array())
     {
-        $this->data = (array)$data;
+        $this->data = (array) $data;
     }
 
     /**
@@ -101,7 +101,7 @@ class Bag implements
      * add the item value.
      *
      * @param string $key
-     * @param mixed $value
+     * @param mixed  $value
      */
     public function add($key, $value)
     {
@@ -112,7 +112,7 @@ class Bag implements
      * Set the item value.
      *
      * @param string $key
-     * @param mixed $value
+     * @param mixed  $value
      */
     public function set($key, $value)
     {
@@ -123,7 +123,7 @@ class Bag implements
      * Retrieve item from Bag.
      *
      * @param string $key
-     * @param mixed $default
+     * @param mixed  $default
      *
      * @return mixed
      */
@@ -228,7 +228,7 @@ class Bag implements
      * Assigns a value to the specified data.
      *
      * @param string $key
-     * @param mixed $value
+     * @param mixed  $value
      */
     public function __set($key, $value)
     {
@@ -271,7 +271,7 @@ class Bag implements
      * Assigns a value to the specified offset.
      *
      * @param string $offset
-     * @param mixed $value
+     * @param mixed  $value
      */
     public function offsetSet($offset, $value)
     {

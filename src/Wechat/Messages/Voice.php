@@ -2,6 +2,8 @@
 
 namespace Stoneworld\Wechat\Messages;
 
+use Stoneworld\Wechat\Media;
+
 /**
  * 声音消息
  *
@@ -46,10 +48,10 @@ class Voice extends BaseMessage
     public function toStaff()
     {
         return array(
-            'voice' => array(
-                'media_id' => $this->media_id,
-            ),
-        );
+                'voice' => array(
+                            'media_id' => $this->media_id,
+                           ),
+               );
     }
 
     /**
@@ -60,9 +62,9 @@ class Voice extends BaseMessage
     public function toReply()
     {
         return array(
-            'Voice' => array(
-                'MediaId' => $this->media_id,
-            ),
-        );
+                'Voice' => array(
+                            'MediaId' => $this->media_id,
+                           ),
+               );
     }
 }

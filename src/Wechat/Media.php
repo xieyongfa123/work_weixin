@@ -5,6 +5,7 @@ namespace Stoneworld\Wechat;
 use Stoneworld\Wechat\Utils\Arr;
 use Stoneworld\Wechat\Utils\Bag;
 use Stoneworld\Wechat\Utils\File;
+use Stoneworld\Wechat\Utils\JSON;
 
 /**
  * 媒体素材.
@@ -32,12 +33,12 @@ class Media
      * @var array
      */
     protected $allowTypes = array(
-        'image',
-        'voice',
-        'video',
-        'file',
-        'news',
-    );
+                             'image',
+                             'voice',
+                             'video',
+                             'file',
+                             'news',
+                            );
 
     /**
      * Http对象
@@ -54,7 +55,6 @@ class Media
     protected $forever = false;
 
     protected $agentId = null;
-
     /**
      * constructor.
      *
@@ -85,7 +85,7 @@ class Media
      *
      * @param string $type
      * @param string $path
-     * @param array $params
+     * @param array  $params
      *
      * @return string
      */
@@ -100,11 +100,12 @@ class Media
         }
 
 
+
         $queries = array('type' => $type, 'agentid' => $this->agentId);
 
         $options = array(
-            'files' => array('media' => $path),
-        );
+                    'files' => array('media' => $path),
+                   );
 
         $url = $this->getUrl($type, $queries);
 
@@ -130,7 +131,7 @@ class Media
      */
     public function news($agentId, array $articles)
     {
-        $params = array('agentid' => 5, 'mpnews' => array('articles' => $articles));
+        $params = array('agentid'=> 5, 'mpnews'=>array('articles'=>$articles));
 
         $response = $this->http->jsonPost(self::API_FOREVER_NEWS_UPLOAD, $params);
 
@@ -141,18 +142,18 @@ class Media
      * 修改图文消息.
      *
      * @param string $mediaId
-     * @param array $articles
-     * @param int $agentId
+     * @param array  $articles
+     * @param int    $agentId
      *
      * @return bool
      */
     public function updateNews($mediaId, array $articles, $agentId = 0)
     {
         $params = array(
-            'media_id' => $mediaId,
-            'agentid' => $agentId,
-            'mpnews' => array('articles' => $articles),
-        );
+                   'media_id' => $mediaId,
+                   'agentid' => $agentId,
+                   'mpnews'=>array('articles'=>$articles),
+                  );
 
         return $this->http->jsonPost(self::API_FOREVER_NEWS_UPDATE, $params);
     }
@@ -179,7 +180,7 @@ class Media
      */
     public function stats($type = null, $agentId)
     {
-        $response = $this->http->get(self::API_FOREVER_COUNT . '?agentid=' . $agentId);
+        $response = $this->http->get(self::API_FOREVER_COUNT.'?agentid='.$agentId);
 
         $response = new Bag($response);
 
@@ -204,19 +205,19 @@ class Media
      * }
      *
      * @param string $type
-     * @param int $offset
-     * @param int $count
+     * @param int    $offset
+     * @param int    $count
      *
      * @return array
      */
     public function lists($type, $offset = 0, $count = 20, $agentId)
     {
         $params = array(
-            'type' => $type,
-            'offset' => intval($offset),
-            'count' => min(20, $count),
-            'agentid' => $agentId,
-        );
+                   'type' => $type,
+                   'offset' => intval($offset),
+                   'count' => min(20, $count),
+                   'agentid' => $agentId,
+                  );
 
         return $this->http->jsonPost(self::API_FOREVER_LIST, $params);
     }
@@ -226,11 +227,11 @@ class Media
      * @param  string $filename 图片路径
      * @return string
      */
-    public function uploadImg($filename)
+    public function uploadImg( $filename)
     {
         $options = array(
-            'files' => array('media' => $filename),
-        );
+                    'files' => array('media' => $filename),
+                   );
 
         $response = $this->http->jsonPost(self::API_UPLOAD_IMG, $params = array(), $options);
 
@@ -258,9 +259,9 @@ class Media
         if (!is_array($contents)) {
             $ext = File::getStreamExt($contents);
 
-            file_put_contents($filename . $ext, $contents);
+            file_put_contents($filename.$ext, $contents);
 
-            return $filename . $ext;
+            return $filename.$ext;
         } else {
             return $contents;
         }
@@ -274,16 +275,16 @@ class Media
      * </pre>
      *
      * @param string $method
-     * @param array $args
+     * @param array  $args
      *
      * @return string
      */
     public function __call($method, $args)
     {
         $args = array(
-            $method,
-            array_shift($args),
-        );
+                 $method,
+                 array_shift($args),
+                );
 
         return call_user_func_array(array(__CLASS__, 'upload'), $args);
     }
@@ -292,7 +293,7 @@ class Media
      * 获取API.
      *
      * @param string $type
-     * @param array $queries
+     * @param array  $queries
      *
      * @return string
      */
@@ -304,6 +305,6 @@ class Media
             $api = $this->forever ? self::API_FOREVER_UPLOAD : self::API_TEMPORARY_UPLOAD;
         }
 
-        return $api . '?' . http_build_query($queries);
+        return $api.'?'.http_build_query($queries);
     }
 }
