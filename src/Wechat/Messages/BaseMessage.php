@@ -97,7 +97,7 @@ abstract class BaseMessage extends MagicAttributes
         }
         $group = array(
                 'touser' => $this->touser,
-                'toparty' => $this->toparty,
+                'toparty' => (string)$this->toparty,
                 'totag'   => $this->totag,
                 'agentid' => $this->agentid,
             );
