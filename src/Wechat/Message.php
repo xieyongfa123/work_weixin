@@ -21,6 +21,7 @@ class Message
     const NEWS      = 'news';
     const NEWS_ITEM = 'news_item';
     const MP_NEWS = 'mp_news';
+    const textcard = 'textcard';
 
 
     /**
