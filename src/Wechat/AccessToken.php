@@ -8,6 +8,7 @@ namespace Stoneworld\Wechat;
 class AccessToken
 {
 
+
     /**
      * 应用ID
      *
