@@ -10,6 +10,7 @@ class Agent
     const API_GET  = 'https://qyapi.weixin.qq.com/cgi-bin/agent/get';
     const API_SET  = 'https://qyapi.weixin.qq.com/cgi-bin/agent/set';
     const API_LIST = 'https://qyapi.weixin.qq.com/cgi-bin/agent/list';
+    const API_CALLBACK_SERVER_IP_LIST = 'https://qyapi.weixin.qq.com/cgi-bin/getcallbackip';
 
     /**
      * Http对象
@@ -63,6 +64,20 @@ class Agent
         $response = $this->http->get(self::API_LIST);
 
         return $response['agentlist'];
+    }
+    }
+
+    /**
+     * 获取企业微信服务器的ip段
+     *
+     * @param void
+     * @return array
+     */
+    public function ips()
+    {
+        $response = $this->http->get(self::API_CALLBACK_SERVER_IP_LIST);
+
+        return $response['ip_list'];
     }
 
 }
