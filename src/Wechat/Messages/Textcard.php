@@ -27,7 +27,7 @@ class Textcard extends BaseMessage
     public function toStaff()
     {
         return array(
-            'Textcard' => array(
+            'textcard' => array(
                 'title'          => $this->title,
                 'description'    => $this->description,
                 'url'            => $this->url,
@@ -43,7 +43,7 @@ class Textcard extends BaseMessage
     public function toReply()
     {
         $response = array(
-            'Textcard' => array(
+            'textcard' => array(
                 'title'          => $this->title,
                 'description'    => $this->description,
                 'url'            => $this->url,
