@@ -10,7 +10,7 @@ use Stoneworld\Wechat\Utils\Bag;
 class Auth
 {
     /**
-     * 应用ID.
+     * 企业号ID.
      *
      * @var string
      */
@@ -22,6 +22,12 @@ class Auth
      * @var string
      */
     protected $appSecret;
+
+    /**
+     * 应用ID
+     * @var string
+     */
+    protected $agentId;
 
     /**
      * Http对象
@@ -47,11 +53,13 @@ class Auth
      *
      * @param string $appId
      * @param string $appSecret
+     * @param string $agentId
      */
-    public function __construct($appId, $appSecret)
+    public function __construct($appId, $appSecret, $agentId)
     {
         $this->appId = $appId;
         $this->appSecret = $appSecret;
+        $this->agentId = $agentId;
         $this->http = new Http(new AccessToken($appId, $appSecret));
         $this->input = new Input();
     }
@@ -71,6 +79,7 @@ class Auth
 
         $params = array(
                    'appid' => $this->appId,
+                    'agentid' => $this->agentId,
                    'redirect_uri' => $to,
                    'response_type' => 'code',
                    'scope' => $scope,
