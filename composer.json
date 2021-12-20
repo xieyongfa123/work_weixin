@@ -1,12 +1,12 @@
 {
-    "name": "xieyongfa/work_wechat",
+    "name": "xieyongfa/work_weixin",
     "description": "微信企业号",
     "keywords": ["wechat"],
     "homepage": "https://github.com/xieyongfa123/work_weixin",
     "license": "MIT",
     "authors": [
         {
-            "name": "xieyongfa/work_wechat",
+            "name": "xieyongfa",
             "homepage": "https://github.com/xieyongfa123/work_weixin",
             "role": "Developer"
         }
