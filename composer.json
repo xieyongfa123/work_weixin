@@ -25,7 +25,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Stoneworld\\Wechat\\": "src/Wechat/"
+            "xieyongfa\\Wechat\\": "src/Wechat/"
         }
     }
 }
